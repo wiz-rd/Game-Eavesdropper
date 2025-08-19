@@ -97,7 +97,6 @@ parser.add_argument(
     "--words-file",
     type=str,
     help='The "bad words" file.',
-    required=not list_argument,
     default="problem_words.txt",
 )
 
@@ -178,8 +177,6 @@ syn_config = SynthesisConfig(
 )
 voice = PiperVoice.load(voice_model)
 
-# TODO: DELETE DEBUGGING
-print(BAD_WORDS)
 
 ######################
 # PROCESS THE SPEECH #
