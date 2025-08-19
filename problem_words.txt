@@ -1,0 +1,10 @@
+fly
+glide
+horse
+Ganon
+village
+Kakariko
+bomb
+rune
+shieka
+slate

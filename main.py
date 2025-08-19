@@ -98,6 +98,7 @@ parser.add_argument(
     type=str,
     help='The "bad words" file.',
     required=not list_argument,
+    default="problem_words.txt",
 )
 
 args = parser.parse_args()
