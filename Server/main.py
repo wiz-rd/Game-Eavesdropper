@@ -266,7 +266,6 @@ try:
 
                         # print this so we can see the string
                         print(PUNISHMENT_STRING + f"'{caught_string}'.")
-                        networking.send_term(caught_words)
 
                         # say the punishment phrase aloud
                         for chunk in voice.synthesize(
@@ -288,7 +287,9 @@ except KeyboardInterrupt:
     parser.exit(0)
 except Exception as e:
     parser.exit(f"{type(e).__name__}: {str(e)} at line {e.__traceback__.tb_lineno}")
-
+finally:
+    # TODO: put "exit server" here as well, from networking.py
+    ...
 
 # wooper
 # ⬜⬜⬜⬛⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜⬜
