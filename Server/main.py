@@ -11,6 +11,8 @@ Resources this uses:
 Author: @Wiz-rd
 """
 
+import networking
+
 import argparse
 import json
 import pathlib
@@ -171,8 +173,8 @@ def callback(indata, frames, time, status):
 model = Model(lang=args.model)
 syn_config = SynthesisConfig(
     volume=1.5,  # half louder
-    noise_scale=1.2,  # more audio variation
-    noise_w_scale=1.2,  # more speaking variation
+    noise_scale=1,  # more audio variation
+    noise_w_scale=1,  # more speaking variation
     normalize_audio=False,  # use raw audio from voice
 )
 voice = PiperVoice.load(voice_model)
@@ -264,6 +266,7 @@ try:
 
                         # print this so we can see the string
                         print(PUNISHMENT_STRING + f"'{caught_string}'.")
+                        networking.send_term(caught_words)
 
                         # say the punishment phrase aloud
                         for chunk in voice.synthesize(
