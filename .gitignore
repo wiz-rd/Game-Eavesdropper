@@ -3,3 +3,5 @@
 /venv
 /models
 /Server/models
+.vscode
+*/__pycache__

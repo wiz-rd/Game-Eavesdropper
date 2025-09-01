@@ -5,13 +5,18 @@ what the mod should look like at completion.
 """
 
 from websockets.sync.client import connect
+from websockets import ConnectionClosed
 
 
-def hello():
+def listen_indefinitely():
     with connect("ws://localhost:8765") as websocket:
-        websocket.send("Hello world!")
-        message = websocket.recv()
-        print(f"Received: {message}")
+        while True:
+            try:
+                message = websocket.recv(timeout=None)
+                print(f"Received: {message}")
+            except ConnectionClosed:
+                print("Server closed connection.")
+                break
 
 
-hello()
+listen_indefinitely()

@@ -7,6 +7,7 @@ to mimic challenges originating from the streamer DougDoug.
 Resources this uses:
 - Vosk
 - Piper (Piper-TTS)
+- Sounddevice
 
 Author: @Wiz-rd
 """
@@ -18,6 +19,7 @@ import json
 import pathlib
 from queue import Queue
 import sys
+import threading
 from urllib.error import HTTPError
 
 import sounddevice as sd
@@ -161,6 +163,9 @@ SetLogLevel(-1)
 
 # setup a queue for printing voice output
 q = Queue()
+server = networking.ConnectionHandler()
+serv_thread = threading.Thread(target=server.run)
+serv_thread.start()
 
 
 def callback(indata, frames, time, status):
@@ -275,6 +280,8 @@ try:
                             # crazy how this just works
                             output_stream.write(chunk.audio_int16_array)
 
+                        server.broadcast(caught_words)
+
                 # uncomment this below to get or use partials or
                 # text before it's "solidified" by the model
 
@@ -284,6 +291,7 @@ try:
 # exiting the script
 except KeyboardInterrupt:
     print("\nDone")
+    server.shutdown()
     parser.exit(0)
 except Exception as e:
     parser.exit(f"{type(e).__name__}: {str(e)} at line {e.__traceback__.tb_lineno}")
